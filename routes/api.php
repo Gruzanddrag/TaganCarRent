@@ -26,6 +26,7 @@ Route::group([
 ], function () {
     Route::post('/car',"Car\CarController@create");
     Route::post('/car/{id}',"Car\CarController@edit");
+    Route::get('/user/car',"Car\CarController@user_cars");
 });
 /*
  * Routes for auth
