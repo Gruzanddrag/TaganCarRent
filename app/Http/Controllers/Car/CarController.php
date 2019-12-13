@@ -82,6 +82,21 @@ class CarController extends Controller
         ]);
     }
 
+
+    public function users_car() {
+        $mades = DB::table('cars')->select('made')->distinct()->get();
+        foreach ($mades as $made) {
+            $made->models = DB::table('cars')->select('model')->where('made', $made->made)->distinct()->get();
+        }
+        return CarCollection::collection(Car::where('hostedBy', auth()->user()->id))->additional([
+            'status' => true,
+            'meta' => [
+                'mades' => $mades,
+                'categories' => Category::all()
+            ]
+        ]);
+    }
+
     /**
      * Show the form for editing the specified resource.
      *

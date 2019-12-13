@@ -31,18 +31,8 @@ class CreateUsersTable extends Migration
         /*
          * Hardcore user
          */
-        $user = new User();
-        $user['email'] = 'bulahov26@gmail.com';
-        $user['password'] = Hash::make('admin');
-        $user['name'] = 'Nikita';
-        $user['surname'] = 'Bulakhov';
-        $user['tripCount'] = 13;
-        $user['rating'] = 5;
-        $user['appToDrive'] = true;
-        $user['surname'] = 'Bulakhov';
-        $user['phone'] = '+79964168136';
-        $user['age'] = 19;
-        $user->save();
+        $fake = new App\Facker\UserFaker;
+        $fake->fake();
     }
 
     /**

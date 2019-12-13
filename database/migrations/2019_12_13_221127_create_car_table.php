@@ -120,25 +120,8 @@ class CreateCarTable extends Migration
         /*
          * Hardcore
          */
-        $car = new Car();
-        $car['model'] = 'Q7';
-        $car['made'] = 'AUDI';
-        $car['location'] = 'Moscow';
-        $car['description'] = 'STOOPID CAR';
-        $car['modelYear'] = 1989;
-        $car['countOfPhotos'] = 0;
-        $car['rating'] = 0.7;
-        $car['stateId'] = 0;
-        $car['hostedBy'] = 1;
-        $car['categoryId'] = 2;
-        $car['distanceIncluded'] = 120;
-        $car['additionPrice'] = 11;
-        $car['price'] = 152.2;
-        $car['fuelType'] = 98;
-        $car['fuelPerKilometres'] = 22;
-        $car['doorCount'] = 5;
-        $car['seatCount'] = 5;
-        $car->save();
+        $fake = new App\Facker\CarFacker();
+        $fake->fake();
     }
 
     /**
