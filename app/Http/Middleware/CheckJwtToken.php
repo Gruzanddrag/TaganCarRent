@@ -32,7 +32,7 @@ class CheckJwtToken extends BaseMiddleware
             } else if ($e instanceof \Tymon\JWTAuth\Exceptions\TokenBlacklistedException){
                 return response()->json(['status' => false]);
             } else {
-                \Log::debug($e);
+                \Log::debug($request);
                 return response()->json(['status' => false, 'msg' => 'missing']);
             }
         } catch (TokenBlacklistedException $e) {
