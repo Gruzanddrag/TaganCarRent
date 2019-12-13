@@ -36,6 +36,10 @@ class CreateUsersTable extends Migration
         $user['password'] = Hash::make('admin');
         $user['name'] = 'Nikita';
         $user['surname'] = 'Bulakhov';
+        $user['tripCount'] = 13;
+        $user['rating'] = 5;
+        $user['appToDrive'] = true;
+        $user['surname'] = 'Bulakhov';
         $user['phone'] = '+79964168136';
         $user['age'] = 19;
         $user->save();
