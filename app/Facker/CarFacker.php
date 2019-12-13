@@ -51,8 +51,8 @@ class CarFacker
         $car->save();
 
         $car = new Car();
-        $car['model'] = '24';
-        $car['made'] = 'Volga';
+        $car['model'] = 'VOLGA 24';
+        $car['made'] = 'GAZ';
         $car['location'] = 'Moscow';
         $car['description'] = 'Rear and clasic car';
         $car['modelYear'] = 1977;
