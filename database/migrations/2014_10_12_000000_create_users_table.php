@@ -18,6 +18,7 @@ class CreateUsersTable extends Migration
             $table->bigIncrements('id');
             $table->string('name');
             $table->string('surname');
+            $table->integer('age');
             $table->string('email')->unique();
             $table->string('password');
             $table->string('phone');
@@ -36,6 +37,7 @@ class CreateUsersTable extends Migration
         $user['name'] = 'Nikita';
         $user['surname'] = 'Bulakhov';
         $user['phone'] = '+79964168136';
+        $user['age'] = 19;
         $user->save();
     }
 
