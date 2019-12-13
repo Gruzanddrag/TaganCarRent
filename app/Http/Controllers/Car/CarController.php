@@ -74,10 +74,10 @@ class CarController extends Controller
     public function show($id)
     {
         $car = Car::find($id);
-        $car['owner'] = $car->owner;
         $car['category'] = Car::find($id)->category['categoryName'];
         return response()->json([
             'status' => true,
+            'owner' => Car::find($id)->owner,
             'data' => $car
         ]);
     }
