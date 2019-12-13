@@ -19,6 +19,7 @@ class CheckJwtToken extends BaseMiddleware
      */
     public function handle($request, Closure $next)//посредник, который обновляет токен, если тот истек
     {
+        \Log::debug($request->headers->all());
         try {
             $user = JWTAuth::parseToken()->authenticate();
         } catch (Exception $e) {
@@ -32,7 +33,6 @@ class CheckJwtToken extends BaseMiddleware
             } else if ($e instanceof \Tymon\JWTAuth\Exceptions\TokenBlacklistedException){
                 return response()->json(['status' => false]);
             } else {
-                \Log::debug($request);
                 return response()->json(['status' => false, 'msg' => 'missing']);
             }
         } catch (TokenBlacklistedException $e) {
