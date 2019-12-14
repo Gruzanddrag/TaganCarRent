@@ -24,7 +24,7 @@ class CarController extends Controller
         }
         $cars = [];
         if($q){
-            $cars = Car::query()->whereRaw($q)->get();
+            $cars = Car::query()->whereRaw(self::formateQuery($q))->get();
         } else {
             $cars = Car::all();
         }
@@ -139,14 +139,20 @@ class CarController extends Controller
         //
     }
 
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy($id)
-    {
-        //
+    static function formateQuery($string){
+        $arr = explode(" ", $string);
+        \Log::debug($string);
+        $query = "";
+        if(sizeof($arr)){
+            foreach ($arr as $key => $rule){
+                $query = $query . $rule;
+                if($key != sizeof($arr) - 1){
+                    $query = $query . " and ";
+                }
+            }
+        } else {
+            $query = $string;
+        }
+        return $query;
     }
 }
