@@ -18,6 +18,7 @@
 Route::get('/car',"Car\CarController@index");
 Route::get('/lol',"Car\CarController@lol");
 Route::get('/car/{id}',"Car\CarController@show");
+Route::post('/photo/{user_id}/{car_id}',"Car\CarController@save_photo");
 
 /*
  * Routes for secret data

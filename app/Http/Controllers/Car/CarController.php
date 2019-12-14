@@ -9,6 +9,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\DB;
 use App\Http\Resources\CarCollection;
 use App\Model\State;
+use phpDocumentor\Reflection\Types\Array_;
 
 class CarController extends Controller
 {
@@ -47,10 +48,8 @@ class CarController extends Controller
         try{
             $car = new Car();
             $data = request($car->getFillable());
-            \Log::debug($data->has('model'));
             $car->fill($data);
             $car->hostedBy = auth()->user()->id;
-            \Log::debug($car);
             $car->saveOrFail();
             $status = true;
         }catch (\Exception $e) {
@@ -67,10 +66,6 @@ class CarController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
-    {
-        //
-    }
 
     /**
      * @param $id
@@ -83,7 +78,8 @@ class CarController extends Controller
         return response()->json([
             'status' => true,
             'owner' => Car::find($id)->owner,
-            'data' => $car
+            'data' => $car,
+            'images' => CarCollection::show_img($car->hostedBy,$car->id)
         ]);
     }
 
@@ -96,6 +92,11 @@ class CarController extends Controller
         return CarCollection::collection(Car::where('hostedBy', auth()->user()->id)->get())->additional([
             'status' => true
         ]);
+    }
+
+    public function save_photo(Request $r, $user_id, $car_id){
+        $f = $r->file('photo')->store('/photos/'.$user_id.'/'.$car_id );
+        return response()->json(['status' => 'true']);
     }
 
     /**

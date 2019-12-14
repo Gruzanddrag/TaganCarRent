@@ -3,9 +3,29 @@
 namespace App\Http\Resources;
 
 use Illuminate\Http\Resources\Json\JsonResource;
+use Illuminate\Support\Facades\Storage;
+use mysql_xdevapi\Exception;
 
 class CarCollection extends JsonResource
 {
+    /**
+     * @param $user_id
+     * @param $car_id
+     * @return \ArrayObject
+     */
+    static function show_img($user_id, $car_id)
+    {
+        $arr = [''];
+        $dir = getcwd().'/storage/app/public/photos/'.$user_id.'/'.$car_id;
+        if (is_dir($dir)){
+            $arr = [];
+            $scanned_directory = array_diff(scandir($dir), array('..', '.'));
+            foreach ($scanned_directory as $i) {
+                array_push($arr, Storage::url("photos/" . $user_id . '/' . $car_id . '/' . $i));
+            }
+        }
+        return $arr;
+    }
     /**
      * Transform the resource collection into an array.
      *
@@ -14,6 +34,7 @@ class CarCollection extends JsonResource
      */
     public function toArray($request)
     {
+        \Log::debug(self::show_img(1,1));
         return [
             'id' => $this->id,
             'model' => $this->model,
@@ -23,6 +44,7 @@ class CarCollection extends JsonResource
             'rating' => $this->rating,
             'tripCount' => $this->tripCount,
             'state' => $this->state['stateName'],
+            'image' => $this->show_img($this->hostedBy, $this->id)[0],
             'category' => $this->category['categoryName'],
         ];
     }
