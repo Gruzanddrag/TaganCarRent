@@ -31,13 +31,6 @@ class CarController extends Controller
         ]);
     }
 
-    public function lol() {
-        $q = request()->query();
-        \Log::debug($q['raw']);
-        return $this->model->filtered($q['raw']);
-//        return 'awda';
-    }
-
     /**
      * @return \Illuminate\Http\JsonResponse
      * @throws \Throwable
