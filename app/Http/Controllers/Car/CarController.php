@@ -17,12 +17,18 @@ class CarController extends Controller
      */
     public function index()
     {
-        $q = request()->query();
+        $q = request()->query('filter');
         $mades = DB::table('cars')->select('made')->distinct()->get();
         foreach ($mades as $made) {
             $made->models = DB::table('cars')->select('model')->where('made', $made->made)->distinct()->get();
         }
-        return CarCollection::collection(Car::query()->whereRaw($q['filter'])->get())->additional([
+        $cars = [];
+        if($q){
+            $cars = Car::query()->whereRaw($q)->get();
+        } else {
+            $cars = Car::all();
+        }
+        return CarCollection::collection($cars)->additional([
             'status' => true,
             'meta' => [
                 'makes' => $mades,
