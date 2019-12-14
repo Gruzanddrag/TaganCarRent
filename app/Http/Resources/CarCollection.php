@@ -16,12 +16,12 @@ class CarCollection extends JsonResource
     static function show_img($user_id, $car_id)
     {
         $arr = [''];
-        $dir = getcwd().'/storage/app/public/photos/'.$user_id.'/'.$car_id;
+        $dir = getcwd().'/public/photos/'.$user_id.'/'.$car_id;
         if (is_dir($dir)){
             $arr = [];
             $scanned_directory = array_diff(scandir($dir), array('..', '.'));
             foreach ($scanned_directory as $i) {
-                array_push($arr, Storage::url("photos/" . $user_id . '/' . $car_id . '/' . $i));
+                array_push($arr, Storage::disk('public_uploads')->url("photos/" . $user_id . '/' . $car_id . '/' . $i));
             }
         }
         return $arr;

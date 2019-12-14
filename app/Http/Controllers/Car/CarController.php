@@ -8,6 +8,7 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\DB;
 use App\Http\Resources\CarCollection;
+use Illuminate\Support\Facades\Storage;
 use App\Model\State;
 use phpDocumentor\Reflection\Types\Array_;
 
@@ -95,7 +96,7 @@ class CarController extends Controller
     }
 
     public function save_photo(Request $r, $user_id, $car_id){
-        $f = $r->file('photo')->store('/photos/'.$user_id.'/'.$car_id );
+        Storage::disk('public_uploads')->put('/photos/'.$user_id.'/'.$car_id, $r->file('photo'));
         return response()->json(['status' => 'true']);
     }
 
