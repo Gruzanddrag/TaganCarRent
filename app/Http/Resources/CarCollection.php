@@ -18,7 +18,7 @@ class CarCollection extends JsonResource
             'id' => $this->id,
             'model' => $this->model,
             'made' => $this->made,
-            'yaer' => $this->modelYear,
+            'modelYear' => $this->modelYear,
             'price' => $this->price,
             'location' => $this->location,
             'state' => $this->state['stateName'],
