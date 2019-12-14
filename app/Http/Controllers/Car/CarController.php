@@ -17,17 +17,25 @@ class CarController extends Controller
      */
     public function index()
     {
+        $q = request()->query();
         $mades = DB::table('cars')->select('made')->distinct()->get();
         foreach ($mades as $made) {
             $made->models = DB::table('cars')->select('model')->where('made', $made->made)->distinct()->get();
         }
-        return CarCollection::collection(Car::all())->additional([
+        return CarCollection::collection(Car::query()->whereRaw($q['filter'])->get())->additional([
             'status' => true,
             'meta' => [
-                'mades' => $mades,
+                'makes' => $mades,
                 'categories' => Category::all()
             ]
         ]);
+    }
+
+    public function lol() {
+        $q = request()->query();
+        \Log::debug($q['raw']);
+        return $this->model->filtered($q['raw']);
+//        return 'awda';
     }
 
     /**
@@ -41,8 +49,6 @@ class CarController extends Controller
             $car = new Car();
             $data = request($car->getFillable());
             \Log::debug($data->has('model'));
-//            $data->model = strtoupper($data->model);
-//            $data->made = strtoupper($data->made);
             $car->fill($data);
             $car->hostedBy = auth()->user()->id;
             \Log::debug($car);

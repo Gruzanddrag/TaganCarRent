@@ -16,6 +16,7 @@
  * Routes for open data
  */
 Route::get('/car',"Car\CarController@index");
+Route::get('/lol',"Car\CarController@lol");
 Route::get('/car/{id}',"Car\CarController@show");
 
 /*

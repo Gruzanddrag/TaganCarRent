@@ -20,11 +20,10 @@ class CarCollection extends JsonResource
             'made' => $this->made,
             'modelYear' => $this->modelYear,
             'price' => $this->price,
-            'location' => $this->location,
+            'rating' => $this->rating,
+            'tripCount' => $this->tripCount,
             'state' => $this->state['stateName'],
             'category' => $this->category['categoryName'],
-            'ownerName' => $this->owner['name'],
-            'ownerSurname' => $this->owner['surname']
         ];
     }
 }
