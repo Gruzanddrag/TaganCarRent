@@ -35,7 +35,6 @@ class CarCollection extends JsonResource
      */
     public function toArray($request)
     {
-        \Log::debug(self::show_img(1,1));
         return [
             'id' => $this->id,
             'model' => $this->model,
