@@ -20,6 +20,7 @@ class CarController extends Controller
     public function index()
     {
         $q = request()->query('filter');
+        \Log::debug($q);
         $mades = DB::table('cars')->select('made')->distinct()->get();
         foreach ($mades as $made) {
             $made->models = DB::table('cars')->select('model')->where('made', $made->made)->distinct()->get();
@@ -84,7 +85,9 @@ class CarController extends Controller
         ]);
     }
 
-
+    /**
+     * @return \Illuminate\Http\Resources\Json\AnonymousResourceCollection
+     */
     public function user_cars() {
         $mades = DB::table('cars')->select('made')->distinct()->get();
         foreach ($mades as $made) {
@@ -95,6 +98,13 @@ class CarController extends Controller
         ]);
     }
 
+    /**
+     * РОФЛИШЬ? МНЕ ТАК ПЛОХО ЧТО Я СДЕЛАЛ ОТДЕЛЬНЫЙ МЕТО ДЛЯ ЗАГРУЗКИ ФОТОК
+     * @param Request $r
+     * @param $user_id
+     * @param $car_id
+     * @return \Illuminate\Http\JsonResponse
+     */
     public function save_photo(Request $r, $user_id, $car_id){
         Storage::disk('public_uploads')->put('/photos/'.$user_id.'/'.$car_id, $r->file('photo'));
         return response()->json(['status' => 'true']);
@@ -116,8 +126,6 @@ class CarController extends Controller
                 ['id', '=', $id]
             ])->first();
             $data = request($car->getFillable());
-//            $data->model = strtoupper($data->model);
-//            $data->made = strtoupper($data->made);
             $car->fill($data);
             $car->saveOrFail();
             $status = true;

@@ -9,6 +9,7 @@ use mysql_xdevapi\Exception;
 class CarCollection extends JsonResource
 {
     /**
+     * НЕ НАДО АГРЕССИИ
      * @param $user_id
      * @param $car_id
      * @return \ArrayObject
