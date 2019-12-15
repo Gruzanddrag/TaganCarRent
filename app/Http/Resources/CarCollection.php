@@ -19,7 +19,7 @@ class CarCollection extends JsonResource
         $dir = getcwd().'/public/photos/'.$user_id.'/'.$car_id;
         if (is_dir($dir)){
             $arr = [];
-            $scanned_directory = array_diff(scandir($dir), array('..', '.'));
+            $scanned_directory = array_diff(scandir($dir,SCANDIR_SORT_NONE), array('..', '.'));
             foreach ($scanned_directory as $i) {
                 array_push($arr, Storage::disk('public_uploads')->url("photos/" . $user_id . '/' . $car_id . '/' . $i));
             }
